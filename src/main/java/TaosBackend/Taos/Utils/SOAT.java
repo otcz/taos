@@ -73,7 +73,7 @@ public class SOAT {
             Map<String, Object> parameters = new HashMap();
             parameters.put("email", "OSCAR");
 
-            InputStream is = new FileInputStream(new File("src/main/java/TaosBackend/Taos/Utils/soat_prueba.jrxml"));
+            InputStream is = new FileInputStream(new File("src/main/java/TaosBackend/Taos/Utils/soat1.jrxml"));
 
             JasperReport report = null;
 
@@ -82,7 +82,7 @@ public class SOAT {
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(facturas);
             JasperPrint print = JasperFillManager.fillReport(report, parameters, dataSource);
 
-            JasperExportManager.exportReportToPdfFile(print, "src/main/java/TaosBackend/Taos/Utils/soat_prueba.pdf");
+            JasperExportManager.exportReportToPdfFile(print, "src/main/java/TaosBackend/Taos/Utils/soat1.pdf");
 
         } catch (JRException | FileNotFoundException e) {
             e.printStackTrace();
