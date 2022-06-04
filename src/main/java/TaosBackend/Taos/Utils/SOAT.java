@@ -19,10 +19,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
@@ -54,7 +51,7 @@ public class SOAT {
 
     public void exportarReporteEmpleados(Vehiculo vehiculo) {
         try {
-            Empleado empleado= new Empleado("TOMAS");
+            Empleado empleado = new Empleado("TOMAS");
             List<Empleado> reportesEmpleados = new ArrayList<>();
 
             reportesEmpleados.add(empleado);
@@ -65,6 +62,29 @@ public class SOAT {
 
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void doGet()  {
+        try {
+            Empleado empleado=new Empleado("OSCAFHDH0");
+            List<Empleado> facturas = Arrays.asList(empleado);
+            Map<String, Object> parameters = new HashMap();
+            parameters.put("email", "OSCAR");
+
+            InputStream is = new FileInputStream(new File("src/main/java/TaosBackend/Taos/Utils/soat_prueba.jrxml"));
+
+            JasperReport report = null;
+
+            report = JasperCompileManager.compileReport(is);
+
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(facturas);
+            JasperPrint print = JasperFillManager.fillReport(report, parameters, dataSource);
+
+            JasperExportManager.exportReportToPdfFile(print, "src/main/java/TaosBackend/Taos/Utils/soat_prueba.pdf");
+
+        } catch (JRException | FileNotFoundException e) {
             e.printStackTrace();
         }
     }

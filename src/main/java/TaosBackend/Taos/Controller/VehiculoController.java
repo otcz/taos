@@ -56,7 +56,7 @@ public class VehiculoController {
         Cobro cobro = new Cobro(vehiculo);
         vehiculo.setValnewsoat(cobro.calcularCobro());
         SOAT soat = new SOAT(vehiculo);
-        soat.exportarReporteSOAT();
+        soat.doGet();
         return vehiculo;
     }
 
