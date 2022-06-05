@@ -28,7 +28,6 @@
 		<![CDATA[]]>
 	</queryString>
 	<field name="email" class="java.lang.String"/>
-	<field name="image" class="java.lang.String"/>
 	<background>
 		<band height="811" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
@@ -43,7 +42,7 @@
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement mode="Transparent" x="-20" y="-20" width="769" height="831" uuid="1c0c0148-74fa-49b4-b240-0c6869bf3bd7">
+				<reportElement mode="Opaque" x="-20" y="-20" width="579" height="831" uuid="1c0c0148-74fa-49b4-b240-0c6869bf3bd7">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
