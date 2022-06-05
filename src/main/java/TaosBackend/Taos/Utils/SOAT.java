@@ -73,7 +73,7 @@ public class SOAT {
             Map<String, Object> parameters = new HashMap();
             parameters.put("email", "OSCAR");
 
-            InputStream is = new FileInputStream(new File("src/main/java/TaosBackend/Taos/Utils/soat1.jrxml"));
+            InputStream is = new FileInputStream(new File("src/main/java/TaosBackend/Taos/Utils/soatV2.jrxml"));
 
             JasperReport report = null;
 
