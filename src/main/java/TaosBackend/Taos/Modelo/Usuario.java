@@ -33,8 +33,8 @@ public class Usuario {
 
     @Getter
     @Setter
-    @Column(name = "email")
-    private String email;
+    @Column(name = "telefono")
+    private String telefono;
 
     @Getter
     @Setter

@@ -15,6 +15,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name = "vehiculo")
@@ -41,8 +43,8 @@ public class Vehiculo {
 
     @Getter
     @Setter
-    @Column(name = "email")
-    private String email;
+    @Column(name = "telefono")
+    private String telefono;
 
     @Getter
     @Setter
@@ -108,27 +110,48 @@ public class Vehiculo {
     @Column(name = "nochasis")
     String nochasis;
 
-
+//________________________________________________
     @Getter
     @Setter
     @Column(name = "nonewsoat")
     String nonewsoat;
 
+    //________________________________________________
     @Getter
     @Setter
-    @Column(name = "fcomsoat")
-    String fcomsoat;
+    @Column(name = "yyycomsoat")
+    String yyycomsoat;
 
     @Getter
     @Setter
-    @Column(name = "fvennusoat")
-    String fvennusoat;
+    @Column(name = "mmcomsoat")
+    String mmcomsoat;
+
+    @Getter
+    @Setter
+    @Column(name = "ddcomsoat")
+    String ddcomsoat;
+
+    @Getter
+    @Setter
+    @Column(name = "yyyvennusoat")
+    String yyyvennusoat;
+
+    @Getter
+    @Setter
+    @Column(name = "mmvennusoat")
+    String mmvennusoat;
+
+    @Getter
+    @Setter
+    @Column(name = "ddvennusoat")
+    String ddvennusoat;
 
     @Getter
     @Setter
     @Column(name = "valnewsoat")
     String valnewsoat;
-
+//________________________________________________
 
     @Getter
     @Setter
@@ -171,5 +194,7 @@ public class Vehiculo {
             throw new RuntimeException(e);
         }
     }
+
+
 
 }

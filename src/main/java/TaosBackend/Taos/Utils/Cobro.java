@@ -3,16 +3,18 @@ package TaosBackend.Taos.Utils;
 import TaosBackend.Taos.Modelo.Vehiculo;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-
 public class Cobro {
+
+
     @Getter
     @Setter
-    private List<String> valoresDES = List.of("188.188", "389.912", "523.110", "589.944", "589.944", "589.944", "614.290", "738.464", "733.576", "868.842", "860.288", "987.188", "688.456", "994.050", "1.256.780", "774.560", "976.284", "1.170.488", "346.672", "459.566", "421.966", "524.990", "492.842", "584.586", "617.956", "788.566", "827.012", "993.016", "429.204", "536.270", "533.544", "659.410", "688.456", "807.554", "1.027.514", "1.016.234", "1.474.390");
-
+    private List<String> valoresDES = List.of("180.180", "373.320", "500.850", "564.840", "564.840", "564.840", "588.150", "707.040", "702.360", "831.870", "823.680", "945.180", "659,160", "951,750", "1,203,300", "741,600", "934,740", "1,120,680", "331,920", "440,010", "404,010", "502,650", "471,870", "559,710"
+            , "591,660", "755,010", "791,820", "950,760", "410,940", "513,450", "510,840", "631,350", "659,160", "773,190", "983,790", "972,990", "1,411,650");
 
     @Getter
     @Setter
@@ -134,15 +136,28 @@ public class Cobro {
 
         }
 
-
-
         return "$ " + setCobro;
     }
 
-    public static int yearActual() {
+    public int yearActual() {
         Date date = new Date();
         SimpleDateFormat getYearFormat = new SimpleDateFormat("yyyy");
         String currentYear = getYearFormat.format(date);
         return Integer.parseInt(currentYear);
     }
+
+
+
+
+    public String mes() {
+        Calendar c1 = Calendar.getInstance();
+        List meses = List.of("ene", "feb", "mar", "abr", ",may", "jun", "jul", "ago", "sep", "oct", "nov", "dic");
+        return (String) meses.get(c1.get(Calendar.MONTH));
+    }
+
+    public int date(int DATE) {
+        Calendar c1 = Calendar.getInstance();
+        return c1.get(DATE);
+    }
+
 }

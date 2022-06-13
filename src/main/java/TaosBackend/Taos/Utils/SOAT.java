@@ -1,27 +1,13 @@
 package TaosBackend.Taos.Utils;
 
-import TaosBackend.Taos.Modelo.Soat;
 import TaosBackend.Taos.Modelo.Vehiculo;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 import lombok.Setter;
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
 
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.*;
-
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 
 public class SOAT {
@@ -29,49 +15,40 @@ public class SOAT {
     @Setter
     private Vehiculo vehiculo;
 
+
     public SOAT(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
 
-    public void exportarReporteSOAT() {
+
+
+    public byte[] generarSOAT()  {
         try {
-
-            File theFile = new File("src/main/java/TaosBackend/Taos/Utils/soat_prueba.jasper");
-            JasperReport report = (JasperReport) JRLoader.loadObject(theFile);
-
+            List<Vehiculo> vehiculos = Arrays.asList(getVehiculo());
             Map<String, Object> parameters = new HashMap();
-            parameters.put("email", "OSCAR");
-            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
-            JasperExportManager.exportReportToPdfFile(jasperPrint, "src/main/java/TaosBackend/Taos/Utils/soat_prueba.pdf");
+            parameters.put("telefono", getVehiculo().getTelefono());
+            parameters.put("nonewsoat", getVehiculo().getNonewsoat());
+            parameters.put("placa", getVehiculo().getPlaca());
+            parameters.put("clase", getVehiculo().getClase());
+            parameters.put("tipo", getVehiculo().getTipo());
+            parameters.put("cilindraje", getVehiculo().getCilindraje());
+            parameters.put("modelo", getVehiculo().getModelo());
+            parameters.put("ocupantes", getVehiculo().getOcupantes());
+            parameters.put("marca", getVehiculo().getMarca());
+            parameters.put("linea", getVehiculo().getLinea());
+            parameters.put("nomotor", getVehiculo().getNomotor());
+            parameters.put("nochasis", getVehiculo().getNochasis());
+            parameters.put("toneladas", getVehiculo().getToneladas());
+            parameters.put("nombres", getVehiculo().getNombres());
+            parameters.put("identificacion", getVehiculo().getIdentificacion());
+            parameters.put("yyycomsoat", getVehiculo().getYyycomsoat());
+            parameters.put("mmcomsoat", getVehiculo().getMmcomsoat());
+            parameters.put("ddcomsoat", getVehiculo().getDdcomsoat());
+            parameters.put("yyyvennusoat", getVehiculo().getYyyvennusoat());
+            parameters.put("mmvennusoat", getVehiculo().getMmvennusoat());
+            parameters.put("ddvennusoat", getVehiculo().getDdvennusoat());
+            parameters.put("valnewsoat", getVehiculo().getValnewsoat());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void exportarReporteEmpleados(Vehiculo vehiculo) {
-        try {
-            Empleado empleado = new Empleado("TOMAS");
-            List<Empleado> reportesEmpleados = new ArrayList<>();
-
-            reportesEmpleados.add(empleado);
-            JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile("src/main/java/TaosBackend/Taos/Utils/soat_prueba.jasper"); //Se carga el reporte de su localizacion
-            JasperPrint jprint = JasperFillManager.fillReport(reporte, null, new JRBeanCollectionDataSource(reportesEmpleados)); //Agregamos los parametros para llenar el reporte
-
-            JasperExportManager.exportReportToPdfFile(jprint, "src/main/java/TaosBackend/Taos/Utils/soat_prueba.pdf");
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void doGet()  {
-        try {
-            Empleado empleado=new Empleado("OSCAFHDH0");
-            List<Empleado> facturas = Arrays.asList(empleado);
-            Map<String, Object> parameters = new HashMap();
-            parameters.put("email", "OSCAR");
 
             InputStream is = new FileInputStream(new File("src/main/java/TaosBackend/Taos/Utils/soatV2.jrxml"));
 
@@ -79,13 +56,13 @@ public class SOAT {
 
             report = JasperCompileManager.compileReport(is);
 
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(facturas);
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(vehiculos);
             JasperPrint print = JasperFillManager.fillReport(report, parameters, dataSource);
-
-            JasperExportManager.exportReportToPdfFile(print, "src/main/java/TaosBackend/Taos/Utils/soat1.pdf");
+           return JasperExportManager.exportReportToPdf(print);
 
         } catch (JRException | FileNotFoundException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
