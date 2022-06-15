@@ -60,8 +60,8 @@
 										</span>
 									</label>
 
-								<input id="txt_placa" type="text" label="Placa" name="placa" maxlength="6" class="input" value="" required="" placeholder="ABC123">
-							
+								<input id="txt_placa" type="text" label="Placa" name="placa" maxlength="6" class="input" value="" required="" >
+
 							</div>
 
 							<div class="div_form1">
@@ -72,7 +72,7 @@
 									</span>
 								</label>
 
-								<input id="txt_identificacion" type="text" label="number" name="number" maxlength="10"  required="" placeholder="0123456789" class="input" value="">
+								<input id="txt_identificacion" type="text" label="number" name="number" maxlength="10"  required=""  class="input" value="">
 						
 							</div>
 
@@ -86,7 +86,7 @@
 									</span>
 								</label>
 
-								<input id="txt_telefono" type="text" label="telefono" name="telefono" maxlength="10" class="input" required="" placeholder="3001234567" value="">
+								<input id="txt_telefono" type="text" label="telefono" name="telefono" maxlength="10" class="input" required=""  value="">
 						
 							</div>
 
@@ -115,8 +115,8 @@
 								</ul>
 							</div>
 							
-							<div onclick="enviarDatosUsuario()" class="btn_cotizar" href="#secciontoda" >
-								<a class="s_cotizar">Descubre tu descuento</a>
+							<div id="btn_cotizar" onclick="enviarDatosUsuario()" class="btn_cotizar" href="static\consulta.html" >
+								<a id="s_cotizar" class="s_cotizar">Descubre tu descuento</a>
 								
 							</div>
 						</form>
@@ -127,13 +127,13 @@
 					<div class="div2_segundo_seg">
 						<p class="p_inicio_soat">
 							<before class="clock1"></before>
-							<b id="lb_fecha_inicio_soat" class="lb_fecha_inicio_soat">AAAA-MM-DD</b>
+							<b id="lb_fecha_inicio_soat" class="lb_fecha_inicio_soat">DD/MM/AAAA</b>
 							<span class="ll_titulo_inicio">Inicio nuevo SOAT</span>
 						</p>
 						
 						<p class="p_fin_soat">
 							<before class="clock2"></before>
-							<b id="lb_fecha_vencimiento_soat" class="lb_fecha_vencimiento_soat">AAAA-MM-DD</b>
+							<b id="lb_fecha_vencimiento_soat" class="lb_fecha_inicio_soat">DD/MM/AAAA</b>
 							<span class="ll_titulo_inicio">Vencimiento SOAT</span>
 						</p>
 					</div>
@@ -190,10 +190,10 @@
 								<p id="lb_no_motor"></p>
 							</div>
 
-							<div id="btn_pagar" class="btn_cotizar" href="#secciontoda" >
-								<a id="btn_pagar_payu" class="s_cotizar">Paga seguro PayU</a>
 
-							</div>
+								<a id="s_pagar" class="s_pagar">Paga seguro PayU</a>
+
+
 							
 						</div>
 					</section>

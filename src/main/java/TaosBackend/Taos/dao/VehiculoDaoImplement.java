@@ -14,4 +14,12 @@ public class VehiculoDaoImplement implements  VehiculoDAO {
     public void registrar(Vehiculo vehiculo) {
         entityManager.merge(vehiculo);
     }
+
+    @Override
+    @Transactional
+    public Vehiculo buscarVehiculoPlaca(String placa) {
+        return entityManager.find(Vehiculo.class, placa);
+    }
+
+
 }

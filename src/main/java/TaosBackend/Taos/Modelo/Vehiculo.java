@@ -1,5 +1,5 @@
 package TaosBackend.Taos.Modelo;
-import TaosBackend.Taos.Utils.Cobro;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,20 +15,14 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Entity
 @Table(name = "vehiculo")
 @ToString
 @EqualsAndHashCode
 public class Vehiculo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
-    @Column(name = "id")
-    private Long id;
+
+
 
     @Getter
     @Setter
@@ -46,6 +40,7 @@ public class Vehiculo {
     @Column(name = "telefono")
     private String telefono;
 
+    @Id
     @Getter
     @Setter
     @Column(name = "placa")
@@ -110,7 +105,7 @@ public class Vehiculo {
     @Column(name = "nochasis")
     String nochasis;
 
-//________________________________________________
+    //________________________________________________
     @Getter
     @Setter
     @Column(name = "nonewsoat")
@@ -163,8 +158,12 @@ public class Vehiculo {
     @Column(name = "ocupantes")
     int ocupantes;
 
+    @Getter
+    @Setter
+    @Column(name = "compro")
+    String compro;
 
-    public void registrarVehiculo(String token) {
+    public void obtenerDatosVehiculoVerifik(String token) {
         try {
             HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
             HttpRequest request = HttpRequest.newBuilder()
@@ -194,7 +193,6 @@ public class Vehiculo {
             throw new RuntimeException(e);
         }
     }
-
 
 
 }

@@ -27,21 +27,12 @@ public class VehiculoController {
     @Autowired
     private Token token;
 
-    Vehiculo vehiculo;
-
     @RequestMapping(value = "api/usuarios", method = RequestMethod.POST)
     public Vehiculo getUsuarios(@RequestBody Usuario comprador) {
         // String sToken = token.token();
+        // vehiculo.obtenerDatosVehiculoVerifik(sToken);
         // comprador.obetnerNombreUsuario(sToken);
-        // usuarioDao.registrar(comprador);
-
         Vehiculo vehiculo = new Vehiculo();
-        // Cobro cobro = new Cobro(vehiculo);
-        // vehiculo.setPlaca(comprador.getPlaca());
-        // vehiculo.registrarVehiculo(sToken);
-        // vehiculo.setValnewsoat(cobro.calcularCobro());
-        // vehiculoDAO.registrar(vehiculo);
-
 
         vehiculo.setPlaca("EBP395");
         vehiculo.setNombres("OSCAR TOMAS CARRILLO ZULETA");
@@ -53,7 +44,6 @@ public class VehiculoController {
         vehiculo.setOcupantes(5);
         vehiculo.setCilindraje(1250);
         vehiculo.setToneladas(0);
-        vehiculo.setId(1L);
         vehiculo.setColor("NEGRO");
         vehiculo.setTipo("Particular");
         vehiculo.setClase("AUTOMOVIL");
@@ -63,30 +53,25 @@ public class VehiculoController {
         vehiculo.setTelefono("3135331533");
         vehiculo.setNonewsoat("465656");
 
-
-
         Cobro cobro = new Cobro(vehiculo);
-
         vehiculo.setValnewsoat(cobro.calcularCobro());
-
         vehiculo.setYyycomsoat(String.valueOf(cobro.date(Calendar.YEAR)));
         vehiculo.setMmcomsoat(cobro.mes());
         vehiculo.setDdcomsoat(String.valueOf(cobro.date(Calendar.DATE)));
-
-
-
-        vehiculo.setYyyvennusoat(String.valueOf((cobro.date(Calendar.YEAR)+1)));
+        vehiculo.setYyyvennusoat(String.valueOf((cobro.date(Calendar.YEAR) + 1)));
         vehiculo.setMmvennusoat(cobro.mes());
         vehiculo.setDdvennusoat(String.valueOf(cobro.date(Calendar.DATE)));
+        vehiculo.setCompro("NO");
+        vehiculoDAO.registrar(vehiculo);
 
-        this.vehiculo = vehiculo;
         return vehiculo;
     }
 
-    @RequestMapping(value = "api/document")
-    public Vehiculo documet(HttpServletResponse response) {
+    @RequestMapping(value = "api/document/{placa}")
+    public Vehiculo documet(HttpServletResponse response,@PathVariable String placa) {
         try {
-            SOAT soat = new SOAT(this.vehiculo);
+
+            SOAT soat = new SOAT(vehiculoDAO.buscarVehiculoPlaca(placa));
             byte[] pdfReport = soat.generarSOAT();
             String mimeType = "application/pdf";
             response.setContentType(mimeType);
