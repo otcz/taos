@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/dependency/static-runner.jar --port $PORT target/*.war
+web: java $JAVA_OPTS -jar target/dependency/resources-runner.jar --port $PORT target/*.war
