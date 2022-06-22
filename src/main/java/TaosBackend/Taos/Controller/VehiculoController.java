@@ -29,9 +29,9 @@ public class VehiculoController {
 
     @RequestMapping(value = "api/usuarios", method = RequestMethod.POST)
     public Vehiculo getUsuarios(@RequestBody Usuario comprador) {
-        // String sToken = token.token();
-        // vehiculo.obtenerDatosVehiculoVerifik(sToken);
-        // comprador.obetnerNombreUsuario(sToken);
+
+
+
         Vehiculo vehiculo = new Vehiculo();
 
         vehiculo.setPlaca("EBP395");
