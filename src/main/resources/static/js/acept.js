@@ -23,7 +23,7 @@ async function enviarDatosUsuario(){
 
 
 
-    const request = await fetch('api/usuarios', {
+    const request = await fetch('https://soatcolpatria.herokuapp.com/api/usuarios', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
