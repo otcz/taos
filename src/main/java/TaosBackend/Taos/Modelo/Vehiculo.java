@@ -4,17 +4,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+
 
 @Entity
 @Table(name = "vehiculo")
@@ -164,34 +158,7 @@ public class Vehiculo {
     String compro;
 
     public void obtenerDatosVehiculoVerifik(String token) {
-        try {
-            HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("https://api.verifik.co/v2/co/runt/consultarVehiculoCompleto?plate=" + getPlaca()))
-                    .headers("Authorization", "jwt " + token)
-                    .GET().build();
 
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-            JSONObject json = new JSONObject(response.body());
-            setPlaca(String.valueOf(json.getJSONObject("data").get("plate")));
-            setTipo(String.valueOf(json.getJSONObject("data").getJSONObject("vehicle").get("tipoServicio")));
-            setClase(String.valueOf(json.getJSONObject("data").getJSONObject("vehicle").get("claseVehiculo")));
-            setIdClase(Integer.parseInt(json.getJSONObject("data").getJSONObject("vehicle").get("codClaseSise").toString()));
-            setMarca(String.valueOf(json.getJSONObject("data").getJSONObject("vehicle").get("marca")));
-            setModelo(Integer.parseInt(json.getJSONObject("data").getJSONObject("vehicle").get("modelo").toString()));
-            setLinea(String.valueOf(json.getJSONObject("data").getJSONObject("vehicle").get("linea")));
-            setCilindraje(Integer.parseInt(json.getJSONObject("data").getJSONObject("vehicle").get("cilindraje").toString()));
-            setColor(String.valueOf(json.getJSONObject("data").getJSONObject("vehicle").get("color")));
-            setNoserie(String.valueOf(json.getJSONObject("data").getJSONObject("vehicle").get("noSerie")));
-            setNomotor(String.valueOf(json.getJSONObject("data").getJSONObject("vehicle").get("noMotor")));
-            setNochasis(String.valueOf(json.getJSONObject("data").getJSONObject("vehicle").get("noChasis")));
-            setOcupantes(Integer.parseInt(json.getJSONObject("data").getJSONObject("vehicle").get("ocupantes").toString()));
-            setToneladas(Double.parseDouble(json.getJSONObject("data").getJSONObject("vehicle").get("toneladas").toString()));
-
-        } catch (JSONException | InterruptedException | URISyntaxException | IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
