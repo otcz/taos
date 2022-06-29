@@ -1,16 +1,18 @@
 package TaosBackend.Taos.Utils;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.*;
+
+import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 @Component
 public class Token {
@@ -19,27 +21,33 @@ public class Token {
     private String token;
 
 
-    public String token() {
+    public String obtenerToken() {
 
         try {
-            HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("https://api.verifik.co/v2/auth/login?phone=3106485192&password=Idhuejeuduhed*/"))
-                    .headers("Content-Type", "text/plain;charset=UTF-8")
-                    .POST(HttpRequest.BodyPublishers.noBody())
-                    .build();
+            URL url = new URL("https://api.verifik.co/v2/auth/login?phone=3147359479&password=Qwert12345-");
 
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode node = mapper.readTree(response.body());
-            return node.get("accessToken").asText();
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            con.setDoOutput(true);
+            try(BufferedReader br = new BufferedReader(
+                    new InputStreamReader(con.getInputStream(), "utf-8"))) {
+                StringBuilder response = new StringBuilder();
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode node = mapper.readTree(response.toString());
+                return node.get("accessToken").asText();
 
-        } catch (InterruptedException | URISyntaxException | IOException e) {
+            }
+
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
 
 
 }
