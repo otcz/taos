@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.json.JSONObject;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -164,36 +163,31 @@ public class Vehiculo {
     @Column(name = "compro")
     String compro;
 
-
     public void obtenerDatosVehiculoVerifik(String token) {
-
         try {
-            URL url = new URL("https://api.verifik.co/v2/co/runt/consultarVehiculoCompleto?plate=" + getPlaca());
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            URL obj = new URL("https://api.verifik.co/v2/co/runt/consultarVehiculoCompleto?plate=" + getPlaca());
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("Accept", "application/json");
-            con.setRequestProperty("Authorization", "jwt " + token);
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
-            con.setDoOutput(true);
-            try (BufferedReader br = new BufferedReader(
-                    new InputStreamReader(con.getInputStream(), "utf-8"))) {
-                StringBuilder response = new StringBuilder();
-                String responseLine = null;
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
+            con.setRequestProperty("autenticacion", token);
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
                 }
-
-                br.close();
-
+                in.close();
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode node = mapper.readTree(response.toString());
-
+                System.out.println(response);
                 setPlaca(node.get("data").get("plate").asText());
                 setTipo(node.get("data").get("vehicle").get("tipoServicio").asText());
+                setMarca(node.get("data").get("vehicle").get("marca").asText());
                 setClase(node.get("data").get("vehicle").get("claseVehiculo").asText());
                 setIdClase(Integer.parseInt(node.get("data").get("vehicle").get("codClaseSise").asText()));
-                setMarca(node.get("data").get("vehicle").get("marca").asText());
                 setModelo(Integer.parseInt(node.get("data").get("vehicle").get("modelo").asText()));
                 setLinea(node.get("data").get("vehicle").get("linea").asText());
                 setCilindraje(Integer.parseInt(node.get("data").get("vehicle").get("cilindraje").asText()));
@@ -204,10 +198,8 @@ public class Vehiculo {
                 setOcupantes(Integer.parseInt(node.get("data").get("vehicle").get("ocupantes").asText()));
                 setToneladas(Double.parseDouble(node.get("data").get("vehicle").get("toneladas").asText()));
 
-
             }
-
-        } catch (NumberFormatException|IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

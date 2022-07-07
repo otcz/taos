@@ -29,38 +29,25 @@ public class VehiculoController {
 
     @RequestMapping(value = "usuarios", method = RequestMethod.POST)
     public Vehiculo getUsuarios(@RequestBody Usuario comprador) {
-        Vehiculo vehiculo = new Vehiculo();
-        vehiculo.setPlaca("EBP399");
-        vehiculo.setNombres("OSCAR TOMAS CARRILLO ZULETA");
-        vehiculo.setNochasis("354456356");
-        vehiculo.setNomotor("3453453");
-        vehiculo.setLinea("SPARK");
-        vehiculo.setModelo(2018);
-        vehiculo.setMarca("CHEVROLET");
-        vehiculo.setOcupantes(5);
-        vehiculo.setCilindraje(1250);
-        vehiculo.setToneladas(0);
-        vehiculo.setColor("NEGRO");
-        vehiculo.setTipo("Particular");
-        vehiculo.setClase("AUTOMOVIL");
-        vehiculo.setNoserie("3565432");
-        vehiculo.setIdClase(5);
-        vehiculo.setIdentificacion(1073995282L);
-        vehiculo.setTelefono("3135331533");
-        vehiculo.setNonewsoat("465656");
 
+        String sToken = token.obtenerToken();
+        System.out.println(sToken);
+        comprador.completarNombreUsuario(sToken);
+        Vehiculo vehiculo = new Vehiculo();
+
+        //  vehiculo.obtenerDatosVehiculoVerifik(sToken);
         Cobro cobro = new Cobro(vehiculo);
         vehiculo.setValnewsoat(cobro.calcularCobro());
+
         vehiculo.setYyycomsoat(String.valueOf(cobro.date(Calendar.YEAR)));
         vehiculo.setMmcomsoat(cobro.mes());
         vehiculo.setDdcomsoat(String.valueOf(cobro.date(Calendar.DATE)));
         vehiculo.setYyyvennusoat(String.valueOf((cobro.date(Calendar.YEAR) + 1)));
         vehiculo.setMmvennusoat(cobro.mes());
         vehiculo.setDdvennusoat(String.valueOf(cobro.date(Calendar.DATE)));
-      //  vehiculo.setCodePayU("cobro.getCodePayUCobro()");
         vehiculo.setCompro("NO");
 
-       // vehiculoDAO.registrar(vehiculo);
+        //vehiculoDAO.registrar(vehiculo);
 
         return vehiculo;
     }
