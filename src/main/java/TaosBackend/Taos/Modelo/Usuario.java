@@ -51,30 +51,31 @@ public class Usuario {
     public void completarNombreUsuario(String token) {
         try {
             URL url = new URL("https://api.verifik.co/v2/co/runt/consultarConductor?documentType=CC&documentNumber=" + getIdentificacion());
-
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
-            con.setRequestProperty("autenticacion", token);
+            con.setRequestProperty("Authorization", "jwt " + token);
+            con.setRequestProperty("User-Agent", "Mozilla/5.0");
             con.setDoOutput(true);
-            try(BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(con.getInputStream(), "utf-8"))) {
                 StringBuilder response = new StringBuilder();
                 String responseLine = null;
                 while ((responseLine = br.readLine()) != null) {
                     response.append(responseLine.trim());
                 }
+
+                br.close();
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode node = mapper.readTree(response.toString());
-                setNombres(node.get("fullName").asText());
-                System.out.println(getNombres()+"OSCAR ");
+
+                setNombres(node.get("data").get("fullName").asText());
             }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 
