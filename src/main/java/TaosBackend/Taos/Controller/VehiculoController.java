@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Calendar;
 
 @RestController
@@ -52,24 +53,21 @@ public class VehiculoController {
         return vehiculo;
     }
 
-    @RequestMapping(value = "https://soatcolpatria.herokuapp.com/api/document/{placa}")
-    public Vehiculo documet(HttpServletResponse response, @PathVariable String placa) {
+    @RequestMapping(value = "/document/{placa}", method = RequestMethod.GET)
+    public void documet(HttpServletResponse response, @PathVariable String placa) {
+
+        PrintWriter out = null;
         try {
+            out = response.getWriter();
+            out.println("<html>");
+            out.println("<body>");
+            out.println("<t1>login ok</t1>");
+            out.println("</body>");
+            out.println("</html>");
 
-            SOAT soat = new SOAT(vehiculoDAO.buscarVehiculoPlaca(placa));
-            byte[] pdfReport = soat.generarSOAT();
-            String mimeType = "application/pdf";
-            response.setContentType(mimeType);
-            response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", "reporte.pdf"));
-            response.setContentLength(pdfReport.length);
-            ByteArrayInputStream inStream = new ByteArrayInputStream(pdfReport);
-            FileCopyUtils.copy(inStream, response.getOutputStream());
+        } catch (IOException ex) {
 
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
-        return null;
     }
 
     @RequestMapping(value = "https://soatcolpatria.herokuapp.com/api/enviar/{id}")
